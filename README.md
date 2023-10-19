@@ -39,6 +39,13 @@ As it would be essential for the cleaning process, we would first try to compreh
 ```
 --View of the Raw Data
 Select * 
-From DataCleaning;```
+From DataCleaning;
+```
 
 ![](Raw.jpeg)
+
+```
+--Shape and Content of the Dataset
+EXEC sp_help 'DataCleaning';
+```
+![](shape.jpeg)
