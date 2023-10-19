@@ -68,21 +68,41 @@ As the query reveals, we have 56,477 rows in the dataset, which tells us it is a
 ### 1. Duplicates
 Checking for duplicates in the data is the first step i took in the data cleaning process because having duplicate values in our data can distort outcomes, introduce errors, and ultimately undermine the precision and reliability of the data.
 
-````--Check fo Duplicates
+```
+--Check for Duplicates
 (Select *,
         Row_Number() Over (Partition by ParcelID,
                                         LandUse,
+                                        
                                         Saleprice,
                                         LegalReference
                            Order by UniqueID
                           ) Count_row
  From DataCleaning);
+```
+![](duplicate.jpg)
+
+Based on the results displayed above, we've identified the presence of duplicates. Consequently, we will proceed to formulate additional query  to further investigate and identify any additional duplicate entries.
 
 ```
+With Row_Numb
+as (Select *,
+           Row_Number() Over (Partition by ParcelID,
+                                           LandUse,
+                                           PropertyAddress,
+                                           SaleDate,
+                                           Saleprice,
+                                           LegalReference
+                              Order by UniqueID
+                             ) Count_row
+    From DataCleaning
+   )
+Select *
+from Row_Numb
+Where Count_row = 2
+```
 
-![](Duplicate.jpg)
 
-Based on the results displayed above, we've identified the presence of duplicates. Consequently, we will proceed to formulate additional queries to further investigate and identify any additional duplicate entries.
 ![](MoreDuplicate.jpg)
 
 
