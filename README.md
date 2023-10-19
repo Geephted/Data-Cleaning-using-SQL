@@ -157,4 +157,64 @@ Alter Table Datacleaning
 Drop column SaleDate
 ```
 
-### 3. reaking out Addresses (PropertyAddress & OwnerAddress) into diffrent columns (Address, City & State)
+### 3. Breaking out Addresses (PropertyAddress & OwnerAddress) into different columns (Address, City & State) 
+
+In the realm of data preparation and enhancement, one common challenge often encountered is the need to break down address information into distinct columns for improved organization and analysis. This practice involves splitting the combined "PropertyAddress" and "OwnerAddress" fields into separate columns for "Address," "City," and "State." By disentangling these components, the dataset becomes more structured and accessible, facilitating more refined geospatial and demographic analysis. This transformation not only enhances data clarity but also streamlines the ability to query and visualize address-related data effectively, providing valuable insights for various applications.
+
+```
+Select PropertyAddress,
+		Parsename(Replace(PropertyAddress, ',', '.'), 2) Property_Address,
+		Parsename(Replace(PropertyAddress, ',', '.'), 1) Property_City,
+		OwnerAddress, 
+		Parsename(Replace(OwnerAddress, ',', '.'), 3) Owner_Address,
+		Parsename(Replace(OwnerAddress, ',', '.'), 2) Owner_City,
+		Parsename(Replace(OwnerAddress, ',', '.'), 1) Owner_State
+From Datacleaning;
+
+Alter Table DataCleaning Add Property_Address NvarChar(255),
+							 Property_City NvarChar(255),
+							 Owner_Address NvarChar(255),
+							 Owner_City NvarChar(255),
+							 Owner_State NvarChar(255);
+
+Update Datacleaning
+Set Property_Address = Parsename(Replace(PropertyAddress, ',', '.'), 2),
+	Property_City = Parsename(Replace(PropertyAddress, ',', '.'), 1),
+	Owner_Address = Parsename(Replace(OwnerAddress, ',', '.'), 3),
+	Owner_City = Parsename(Replace(OwnerAddress, ',', '.'), 2),
+	Owner_State = Parsename(Replace(OwnerAddress, ',', '.'), 1);
+```
+
+![](Splitedaddress_intotable.jpg)
+
+### 4. Change Y & N to Yes & No in "Sold as vacant" field
+In data refinement, precision and clarity are paramount. To achieve this, sometimes it's essential to convert ambiguous abbreviations like "Y" and "N" into more explicit terms like "Yes" and "No." For instance, in the "Sold as vacant" field of a dataset, making this simple yet significant change from "Y" and "N" to "Yes" and "No" not only enhances readability but also eliminates any room for misinterpretation. This data transformation ensures that the information is presented in a more accessible manner, contributing to better-informed decisions and analysis while reducing the risk of miscommunication or errors.
+
+```
+Select Distinct (soldasvacant), Count(SoldAsVacant)
+From datacleaning 
+Group by SoldAsVacant
+Order by 2;
+
+Select SoldAsVacant, 
+case When SoldAsVacant = 'N' then 'NO'
+     When SoldAsVacant = 'Y' then 'Yes'
+	 else SoldAsVacant
+	 end
+from DataCleaning;
+
+Update Datacleaning 
+Set SoldAsVacant = case When SoldAsVacant = 'N' then 'NO'
+     When SoldAsVacant = 'Y' then 'Yes'
+	 else SoldAsVacant
+	 end;
+```
+![](Yes&NoChanged.jpg)
+
+
+![](Yes&NoResult.jpg)
+
+The two screenshots above illustrate the transformation of "N" into "No" and "Y" into "Yes." Following this conversion, the subsequent step involved counting the occurrences of "No" and "Yes" in the dataset to provide a clearer view of the data distribution after the update.
+
+## Conclusion
+Data cleaning is an integral phase in any data analysis project, serving as the foundation for accurate, complete, and consistent data. In the context of the Nashville Housing Data, our data cleaning process encompassed a range of techniques, including the removal of duplicates, standardization of date formats, breaking down addresses, and transforming "Y" and "N" to "Yes" and "No" in the "Sold as vacant" field. These measures culminated in a clean, well-structured dataset, poised for in-depth analysis. The cleaned dataset now provides dependable information, opening the door to valuable insights into player attributes, team performance, and other soccer-related factors.
