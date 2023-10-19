@@ -8,7 +8,7 @@ SQL, or Structured Query Language, is a potent tool for efficient data cleaning 
 In this project, we'll delve into how SQL can elevate dataset quality. We'll explore syntax and showcase SQL queries for data cleansing. To illustrate effective cleaning techniques and best practices, we'll provide SQL code samples, shedding light on the art of effective data refinement.
 
 ## Dataset 
-The dataset was gotten from Kaggle. You can find the dataset [here.](url)
+The dataset was gotten from Kaggle. You can find the dataset [here.](https://github.com/Geephted/Data-Cleaning-using-SQL/blob/main/Nashville%20Housing%20Data%20for%20Data%20Cleaning.xlsx)
 
 ## Understanding the Nashville Housing Data Dataset
 
