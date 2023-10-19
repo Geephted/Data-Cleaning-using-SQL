@@ -99,7 +99,7 @@ as (Select *,
    )
 Select *
 from Row_Numb
-Where Count_row = 2
+Where Count_row = 2;
 ```
 
 ![](MoreDuplicate.jpg)
@@ -124,12 +124,37 @@ as (Select *,
    )
 Delete 
 from Row_Numb
-Where Count_row = 2
+Where Count_row = 2;
 ```
 After applying the syntax to remove the duplicates identified in the dataset, I chose to re-run the duplicate-checking syntax to determine if any duplicates remained. The following results illustrate the outcome.
 
 ![](DeletedDuplicate.jpg)
 
 
+### 2. Standardizing Date Format 
+In the world of data analysis, we often encounter datasets that, while rich in information, lack consistency in critical aspects. One such challenge lies in the format of dates within the dataset. Dates might appear in various structures, making analysis cumbersome. In this scenario, Nashville Housing Data lacks a standardized date format, with too many zeros. To address this issue we're gearing up to write SQL code that will harmonize the date format throughout the dataset. This standardization process will ensure that dates are consistent and easily interpretable, facilitating more accurate and efficient data analysis.
 
+```
+--Standardize Date Format 
+Select SaleDate,
+       Convert(Date, saledate) Converted_Date
+From datacleaning;
 
+Alter Table DataCleaning Add Converted_Date Date;
+
+Update Datacleaning
+Set COnverted_Date = Convert(date, Saledate);
+```
+The dataset displayed below reflects the successful update, demonstrating the implementation of standardized date formats after executing the above syntax.
+
+![](ConvertedDate.jpg)
+
+I proceeded to drop the "saledate" column, which had already been standardized.
+
+```
+--Deleting the date with irregularlity 
+Alter Table Datacleaning
+Drop column SaleDate
+```
+
+### 3. reaking out Addresses (PropertyAddress & OwnerAddress) into diffrent columns (Address, City & State)
