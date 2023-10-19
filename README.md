@@ -34,9 +34,9 @@ The dataset is composed of 19 columns and 56,477 rows.
 - OwnerCity — city where owner lives
 - OwnerState — state where owner is located
 
-As it would be essential for our analysis, we would first try to comprehend our dataset in order to gain a sense of it and see its shape.
+As it would be essential for the cleaning process, we would first try to comprehend and understand the dataset in order to gain a sense of it and see its shape.
 
-````
+```
 --View of the Raw Data
 Select * 
 From DataCleaning;
