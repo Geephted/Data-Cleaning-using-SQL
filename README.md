@@ -80,9 +80,9 @@ Checking for duplicates in the data is the first step i took in the data cleanin
                           ) Count_row
  From DataCleaning);
 ```
-![](duplicate.jpg)
+![](duplicate1.jpg)
 
-Based on the results displayed above, we've identified the presence of duplicates. Consequently, we will proceed to formulate additional query  to further investigate and identify any additional duplicate entries.
+Uing the Row Number syntax, the result above reveals the existence of a duplicate within the dataset. Consequently, we will proceed to formulate additional query  to further investigate and identify any additional duplicate entries.
 
 ```
 With Row_Numb
@@ -102,8 +102,34 @@ from Row_Numb
 Where Count_row = 2
 ```
 
-
 ![](MoreDuplicate.jpg)
+
+Utilizing the same Row number syntax to identify rows with counts that equals to 2, we have observed indications of duplicates values within the dataset. As data analysts, our responsibility lies in conducting a thorough examination of the data to gain a comprehensive understanding of the situation. To ascertain whether these entries are genuine duplicates with identical values, a meticulous verification of the data is essential. Deciding on the appropriate course of action for handling these duplicate values hinges on our ability to pinpoint the root cause behind their presence.
+
+The next step is to delete the duplicates that were found in the dataset 
+
+```--Delete Duplicate 
+
+With Row_Numb
+as (Select *,
+           Row_Number() Over (Partition by ParcelID,
+                                           LandUse,
+                                           PropertyAddress,
+                                           SaleDate,
+                                           Saleprice,
+                                           LegalReference
+                              Order by UniqueID
+                             ) Count_row
+    From DataCleaning
+   )
+Delete 
+from Row_Numb
+Where Count_row = 2
+```
+After applying the syntax to remove the duplicates identified in the dataset, I chose to re-run the duplicate-checking syntax to determine if any duplicates remained. The following results illustrate the outcome.
+
+![](DeletedDuplicate.jpg)
+
 
 
 
