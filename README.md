@@ -12,7 +12,7 @@ The dataset was gotten from Kaggle. You can find the dataset [here.](https://git
 
 ## Understanding the Nashville Housing Data Dataset
 
-The dataset is composed of 19 columns and 56,477 rows.
+The dataset is composed of 19 columns and comprises various data types.
 
 - UniqueID — id number attributed to a buyer.
 - ParcelID — code attributed to a land.
@@ -42,10 +42,48 @@ Select *
 From DataCleaning;
 ```
 
-![](Raw.jpeg)
+![](Raw.jpg)
 
 ```
 --Shape and Content of the Dataset
 EXEC sp_help 'DataCleaning';
 ```
-![](shape.jpeg)
+![](shape.jpg)
+
+
+We can also view the number of rows in the dataset.
+
+```
+--Checking for accurate row count 
+SELECT COUNT(*) Row_Numbers
+FROM DataCleaning;
+```
+
+![](Row_Numbers.jpg)
+
+As the query reveals, we have 56,477 rows in the dataset, which tells us it is a pretty large dataset. We now have an idea of what our dataset looks like, so we can proceed with the data-cleaning process properly.
+
+## Data Cleaning
+
+### 1. Duplicates
+Checking for duplicates in the data is the first step i took in the data cleaning process because having duplicate values in our data can distort outcomes, introduce errors, and ultimately undermine the precision and reliability of the data.
+
+````--Check fo Duplicates
+(Select *,
+        Row_Number() Over (Partition by ParcelID,
+                                        LandUse,
+                                        Saleprice,
+                                        LegalReference
+                           Order by UniqueID
+                          ) Count_row
+ From DataCleaning);
+
+```
+
+![](Duplicate.jpg)
+
+Based on the results displayed above, we've identified the presence of duplicates. Consequently, we will proceed to formulate additional queries to further investigate and identify any additional duplicate entries.
+![](MoreDuplicate.jpg)
+
+
+
