@@ -1,16 +1,16 @@
 # Data-Cleaning-using-SQL
 
 ## Intorduction 
-In the realm of data analysis, projects often take us to intriguing datasets that hold valuable insights waiting to be uncovered. In one such endeavor, I ventured into the world of the Nashville Housing Data, a comprehensive information detailing land use and property information in the Tennessee capital, Nashville. To unlock the dataset's hidden potential, I harnessed SQL through Microsoft SQL Management Server Studio, embarking on an extensive journey of exploration and data cleansing.
+In the realm of data analysis, projects often take us to captivating datasets that hold valuable insights waiting to be uncovered. In one such endeavor, I ventured into the world of the Nashville Housing Data, a comprehensive information detailing land use and property information in the Tennessee capital, Nashville. To unlock the dataset's hidden potential, I harnessed SQL through Microsoft SQL Management Server Studio, embarking on an extensive journey of exploration and data cleansing.
 
-SQL, or Structured Query Language, is a potent tool for efficient data cleaning and transformation. With a range of functions and operations at its disposal, SQL stands as a widely recognized computer language for managing and manipulating relational databases.
+SQL (Structured Query Language), is a potent tool for efficient data cleaning and transformation. With a range of functions and operations at its disposal, SQL stands as a widely recognized computer language for managing and manipulating relational databases.
 
-In this project, we'll delve into how SQL can elevate dataset quality. We'll explore syntax and showcase SQL queries for data cleansing. To illustrate effective cleaning techniques and best practices, we'll provide SQL code samples, shedding light on the art of effective data refinement.
+In this project, l will explore syntax and showcase SQL queries for data cleansing. To illustrate effective cleaning techniques and best practices, l will provide SQL code samples, shedding light on the art of effective data refinement.
 
 ## Dataset 
 The dataset was gotten from Kaggle. You can find the dataset [here.](https://github.com/Geephted/Data-Cleaning-using-SQL/blob/main/Nashville%20Housing%20Data%20for%20Data%20Cleaning.xlsx)
 
-## Understanding the Nashville Housing Data Dataset
+## Understanding the Nashville Housing Dataset
 
 The dataset is composed of 19 columns and comprises various data types.
 
@@ -27,7 +27,7 @@ The dataset is composed of 19 columns and comprises various data types.
 - YearBuilt — year the building was built
 - FullBath — a bathroom that includes a shower, a bathtub, a sink, and a toilet.
 - HalfBath — a half bathroom only contains a sink and a toilet
-- Sale_Date — date when the land was sold
+- SaleDate — date when the land was sold
 - SaleAddress — address of land sold
 - City — location of land
 - Owner_Address — owners house address
@@ -65,24 +65,23 @@ As the query reveals, we have 56,477 rows in the dataset, which tells us it is a
 
 ## Data Cleaning
 
-### 1. Duplicates
-Checking for duplicates in the data is the first step i took in the data cleaning process because having duplicate values in our data can distort outcomes, introduce errors, and ultimately undermine the precision and reliability of the data.
+### 1. Removing Duplicates
+The removal of duplicate entries from a dataset is a critical component of data cleaning and preparation, as it significantly impacts data accuracy and quality. Duplicates can introduce errors, skew analytical outcomes, and complicate data interpretation. A thorough process of identification and elimination results in a more streamlined and accurate dataset, thus enhancing data reliability.  In the context of the Nashville Housing Data, the initial step I undertook in the data cleaning process involved checking for duplicates, as the presence of duplicate values has the potential to distort results, introduce errors, and ultimately undermine data precision and reliability.
 
 ```
 --Check for Duplicates
-(Select *,
+Select *,
         Row_Number() Over (Partition by ParcelID,
                                         LandUse,
-                                        
                                         Saleprice,
                                         LegalReference
                            Order by UniqueID
                           ) Count_row
- From DataCleaning);
+ From DataCleaning;
 ```
 ![](duplicate1.jpg)
 
-Uing the Row Number syntax, the result above reveals the existence of a duplicate within the dataset. Consequently, we will proceed to formulate additional query  to further investigate and identify any additional duplicate entries.
+Using the Row Number syntax, the result above reveals the existence of a duplicate within the dataset. Consequently, we will proceed to formulate additional query  to further investigate and identify any additional duplicate entries.
 
 ```
 With Row_Numb
