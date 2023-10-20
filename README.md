@@ -1,6 +1,6 @@
 # Data-Cleaning-using-SQL
 
-## Intorduction 
+## Introduction  
 In the realm of data analysis, projects often take us to captivating datasets that hold valuable insights waiting to be uncovered. In one such endeavor, I ventured into the world of the Nashville Housing Data, a comprehensive information detailing land use and property information in the Tennessee capital, Nashville. To unlock the dataset's hidden potential, I harnessed SQL through Microsoft SQL Management Server Studio, embarking on an extensive journey of exploration and data cleansing.
 
 SQL (Structured Query Language), is a potent tool for efficient data cleaning and transformation. With a range of functions and operations at its disposal, SQL stands as a widely recognized computer language for managing and manipulating relational databases.
